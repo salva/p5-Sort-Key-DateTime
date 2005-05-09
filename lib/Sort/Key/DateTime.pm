@@ -1,13 +1,13 @@
 package Sort::Key::DateTime;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 use strict;
 use warnings;
 
 require Exporter;
 our @ISA = qw(Exporter);
-our @EXPORT = qw(dtkeysort);
+our @EXPORT_OK = qw(dtkeysort dtcmpstr);
 
 use Sort::Key;
 use DateTime;
@@ -25,6 +25,14 @@ sub dtkeysort (&@) {
     wantarray ? @k : $k[0];
 }
 
+sub dtcmpstr ($) {
+    my $dt=shift;
+    my $key = eval { sprintf("%010d%06d%010d", $dt->utc_rd_values) };
+    $@ and croak "sorting key '$dt' generated for element '$_' is not a valid DateTime object ($@)";
+    $key;
+}
+
+
 1;
 __END__
 
@@ -35,7 +43,7 @@ Sort::Key::DateTime - Perl extension for sorting objects by some DateTime key
 =head1 SYNOPSIS
 
 
-  use Sort::Key::DateTime;
+  use Sort::Key::DateTime qw(dtkeysort);
   my @sorted = dtkeysort { $_->date } @meetings;
 
 
@@ -44,14 +52,14 @@ Sort::Key::DateTime - Perl extension for sorting objects by some DateTime key
 Sort::Key::DateTime allows to sort objects by some (calculated) key of
 type DateTime.
 
-=head2 EXPORT
+=head2 EXPORTS
 
 =over 4
 
 =item dtkeysort { CALC_DT_KEY } @array
 
-return the elements on C<@array> sorted by the DateTime key calculated
-applying C<{ CALC_DT_KEY }> to them.
+returns the elements on C<@array> sorted by the DateTime key
+calculated applying C<{ CALC_DT_KEY }> to them.
 
 Inside C<{ CALC_DT_KEY }>, the object is available as C<$_>.
 
@@ -62,6 +70,10 @@ BTW, DateTime objects can be sorted as:
 
   my @sorted = dtkeysort { $_ } @unsorted;
 
+
+=item dtcmpstr($dt)
+
+generates string sorting keys for DateTime objects
 
 =back
 

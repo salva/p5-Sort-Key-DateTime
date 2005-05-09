@@ -6,6 +6,7 @@ use Test::More tests => 5;
 BEGIN { use_ok('Sort::Key::DateTime') };
 
 use DateTime;
+use Sort::Key::DateTime qw(dtkeysort);
 
 my @tz=qw(UTC Europe/Madrid Asia/Taipei America/Los_Angeles);
 

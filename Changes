@@ -1,6 +1,10 @@
 Revision history for Perl extension Sort::Key::DateTime.
 
-0.02  Apr 26 2006
+0.03  May 9 2005
+	- INCOMPATIBLE CHANGE: nothing exported by default now
+	- new dtcmpstr() function
+
+0.02  Apr 26 2005
 	- renamed to Sort::Key::DateTime
 
 0.01  Tue Apr 26 23:30:02 2005
