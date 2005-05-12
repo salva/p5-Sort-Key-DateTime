@@ -1,6 +1,6 @@
 package Sort::Key::DateTime;
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 use strict;
 use warnings;
@@ -21,7 +21,7 @@ sub dtkeysort (&@) {
 	$@ and croak "sorting key '$dt' generated for element '$_' is not a valid DateTime object ($@)";
 	$key;
     } @_;
-    Sort::Key::_keysort(0, \@k, \@_);
+    Sort::Key::_keysort(Sort::Key::STR_SORT, \@k, \@_);
     wantarray ? @k : $k[0];
 }
 

@@ -1,5 +1,9 @@
 Revision history for Perl extension Sort::Key::DateTime.
 
+0.04  May 12 2005
+	- internal change: use constants instead of hard coded numbers
+	  to select keysort comparison algorithm.
+
 0.03  May 9 2005
 	- INCOMPATIBLE CHANGE: nothing exported by default now
 	- new dtcmpstr() function
