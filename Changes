@@ -1,5 +1,8 @@
 Revision history for Perl extension Sort::Key::DateTime.
 
+0.05  May 23 2005
+	- updated to work with latest version of Sort::Key
+
 0.04  May 12 2005
 	- internal change: use constants instead of hard coded numbers
 	  to select keysort comparison algorithm.

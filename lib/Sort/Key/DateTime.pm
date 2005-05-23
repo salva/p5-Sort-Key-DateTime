@@ -1,6 +1,6 @@
 package Sort::Key::DateTime;
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 use strict;
 use warnings;
@@ -9,20 +9,19 @@ require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(dtkeysort dtcmpstr);
 
-use Sort::Key;
+use Sort::Key qw(keysort_inplace);
 use DateTime;
 use Carp;
 
 sub dtkeysort (&@) {
     my $k = shift;
-    my @k = map {
+    keysort_inplace {
 	my $dt = &{$k};
 	my $key = eval { sprintf("%010d%06d%010d", $dt->utc_rd_values) };
 	$@ and croak "sorting key '$dt' generated for element '$_' is not a valid DateTime object ($@)";
 	$key;
     } @_;
-    Sort::Key::_keysort(Sort::Key::STR_SORT, \@k, \@_);
-    wantarray ? @k : $k[0];
+    wantarray ? @_ : $_[0];
 }
 
 sub dtcmpstr ($) {
