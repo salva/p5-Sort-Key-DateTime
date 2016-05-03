@@ -30,8 +30,8 @@ sub dtcmpstr ($) {
 }
 
 sub mkkey_datetime {
-    my $dt = @_ ? shift : $_;
-    sprintf("%010d%06d%010d", $dt->utc_rd_values);
+    my ($d, $s, $n) = (@_ ? shift : $_)->utc_rd_values;
+    sprintf("%010d%06d%010d", $d + 2_147_483_648, $s, $n);
 }
 
 use Sort::Key::Register dt => \&mkkey_datetime, 'string';

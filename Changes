@@ -1,5 +1,9 @@
 Revision history for Perl extension Sort::Key::DateTime.
 
+0.08
+
+        - Module was not handling correctly dates with negative years.
+
 0.07  Apr 24, 2010
         - some test were failing due to missing time zones
 

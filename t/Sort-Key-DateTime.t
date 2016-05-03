@@ -1,6 +1,6 @@
 # -*- Mode: Perl -*-
 
-use Test::More tests => 7;
+use Test::More tests => 14;
 
 use DateTime;
 use Sort::Key::DateTime qw(dtkeysort);
@@ -20,4 +20,20 @@ for (10, 20, 100, 200, 1000, 2000, 5000) {
 					(@tz ? (time_zone => $tz[int rand(@tz)] ) : ()) ) } 0..$_;
 
     is_deeply([dtkeysort { $_ } @unsorted], [sort @unsorted], "sorting $_");
+}
+
+for (10, 20, 100, 200, 1000, 2000, 5000) {
+    my @unsorted = map { DateTime->new( year => int rand(10000) - 5000,
+					month => 1+int rand(12),
+					day => 1+int rand(28),
+					hour => int rand(24),
+					minute => int rand(60),
+					second => int rand(60),
+					(@tz ? (time_zone => $tz[int rand(@tz)] ) : ()) ) } 0..$_;
+
+    is_deeply([dtkeysort { $_ } @unsorted], [sort @unsorted], "sorting $_") or do {
+        open my $fh, '>', "failed-$_.dat";
+        require Data::Dumper;
+        print $fh Data::Dumper::Dumper(\@unsorted);
+    };
 }
